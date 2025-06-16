@@ -1,3 +1,3 @@
-import changeBackgroundColor from "./changeBackgroundColor.js";
+import changeBackground from "./changeBackground.js";
 
-changeBackgroundColor();
+changeBackground();
