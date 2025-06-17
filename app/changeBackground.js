@@ -34,6 +34,10 @@ function changeBackground() {
 function changeContex(context) {
   html.setAttribute("data-contexto", context);
   banner.setAttribute("src", `./imagens/${context}.png`);
+  banner.classList.add("active");
+  setTimeout(() => {
+    banner.classList.remove("active");
+  }, 500);
 }
 
 export default changeBackground;
