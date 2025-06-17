@@ -1,8 +1,10 @@
+import countdown from "./countdown.js";
 const banner = document.querySelector(".app__image");
 const appTitle = document.querySelector(".app__title");
 const html = document.querySelector("html");
 
 function changeContext(context) {
+  countdown(context);
   html.setAttribute("data-contexto", context);
   // adiciona o atributo data-contexto ao html para mudar a cor do background
   banner.setAttribute("src", `./imagens/${context}.png`);
@@ -17,7 +19,7 @@ function changeContext(context) {
     // remove a classe active para a imagem e o titulo apos 300ms
   }, 300);
 
-  if (context === "long") {
+  if (context === "longo") {
     appTitle.innerHTML = `
                 Hora de voltar a superfície,<br>
                  <strong class="app__title-strong">Faça uma pausa longa.</strong>

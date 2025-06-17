@@ -1,5 +1,4 @@
 const musicInput = document.querySelector("#alternar-musica");
-console.log(musicInput);
 
 const music = new Audio("/sons/luna-rise-part-one.mp3");
 // chamando o arquivo de musica com new Audio
@@ -18,4 +17,5 @@ function changeSon() {
     }
   });
 }
+
 export default changeSon;
