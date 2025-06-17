@@ -5,18 +5,35 @@ const banner = document.querySelector(".app__image");
 const html = document.querySelector("html");
 
 function changeBackground() {
-  btnShort.addEventListener("click", () => {
-    html.setAttribute("data-contexto", "descanso-curto");
-    banner.setAttribute("src", "./imagens/descanso-curto.png");
+  btnShort.addEventListener("click", (event) => {
+    changeContex("descanso-curto");
+    event.currentTarget.classList.add("active");
+    if (event.currentTarget.classList.contains("active")) {
+      btnLong.classList.remove("active");
+      btnStart.classList.remove("active");
+    }
   });
-  btnLong.addEventListener("click", () => {
-    html.setAttribute("data-contexto", "descanso-longo");
-    banner.setAttribute("src", "./imagens/descanso-longo.png");
+  btnLong.addEventListener("click", (event) => {
+    changeContex("descanso-longo");
+    event.currentTarget.classList.add("active");
+    if (event.currentTarget.classList.contains("active")) {
+      btnShort.classList.remove("active");
+      btnStart.classList.remove("active");
+    }
   });
-  btnStart.addEventListener("click", () => {
-    html.setAttribute("data-contexto", "foco");
-    banner.setAttribute("src", "./imagens/foco.png");
+  btnStart.addEventListener("click", (event) => {
+    changeContex("foco");
+    event.currentTarget.classList.add("active");
+    if (event.currentTarget.classList.contains("active")) {
+      btnShort.classList.remove("active");
+      btnLong.classList.remove("active");
+    }
   });
+}
+
+function changeContex(context) {
+  html.setAttribute("data-contexto", context);
+  banner.setAttribute("src", `./imagens/${context}.png`);
 }
 
 export default changeBackground;
