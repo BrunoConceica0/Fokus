@@ -16,7 +16,7 @@
   );
 }
 
-[data-contexto="descanso-curto"] {
+[data-contexto="curto"] {
   --main-bg-color: linear-gradient(
     180deg,
     #0f725c 0%,
@@ -25,7 +25,7 @@
   );
 }
 
-[data-contexto="descanso-longo"] {
+[data-contexto="longo"] {
   --main-bg-color: linear-gradient(
     180deg,
     #1875e9 0%,
