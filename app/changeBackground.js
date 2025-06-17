@@ -1,7 +1,9 @@
+// import changeTitle from "./changeTitle";
 const btnShort = document.querySelector(".app__card-button--curto");
 const btnLong = document.querySelector(".app__card-button--longo");
 const btnStart = document.querySelector(".app__card-button--foco");
 const banner = document.querySelector(".app__image");
+const appTitle = document.querySelector(".app__title");
 const html = document.querySelector("html");
 
 function changeBackground() {
@@ -12,6 +14,9 @@ function changeBackground() {
       btnLong.classList.remove("active");
       btnStart.classList.remove("active");
     }
+    appTitle.innerHTML = `
+                Que tal dar uma respirada?,<br>
+                <strong class="app__title-strong">Faça uma pausa curta.</strong>`;
   });
   btnLong.addEventListener("click", (event) => {
     changeContex("descanso-longo");
@@ -20,6 +25,10 @@ function changeBackground() {
       btnShort.classList.remove("active");
       btnStart.classList.remove("active");
     }
+    appTitle.innerHTML = `
+               Hora de voltar a superfície,<br>
+                <strong class="app__title-strong">Faça uma pausa longa.</strong>
+    `;
   });
   btnStart.addEventListener("click", (event) => {
     changeContex("foco");
@@ -28,6 +37,10 @@ function changeBackground() {
       btnShort.classList.remove("active");
       btnLong.classList.remove("active");
     }
+    appTitle.innerHTML = `
+                Otimize sua produtividade,<br>
+                <strong class="app__title-strong">mergulhe no que importa.</strong>
+    `;
   });
 }
 
@@ -35,9 +48,11 @@ function changeContex(context) {
   html.setAttribute("data-contexto", context);
   banner.setAttribute("src", `./imagens/${context}.png`);
   banner.classList.add("active");
+  appTitle.classList.add("active");
   setTimeout(() => {
     banner.classList.remove("active");
-  }, 500);
+    appTitle.classList.remove("active");
+  }, 300);
 }
 
 export default changeBackground;
