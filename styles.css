@@ -85,13 +85,15 @@ h6 {
   font-weight: 200;
   max-width: 46rem;
 }
-
-.app__title-strong {
-  font-weight: 600;
+.app__title.active {
+  animation: slideInRight 0.3s forwards ease-in-out;
+  -webkit-animation: slideInRight 0.3s forwards ease-in-out;
 }
+
 .app__image.active {
-  animation: fadeIn 0.5s forwards ease-in-out;
-  -webkit-animation: fadeIn 0.5s forwards ease-in-out;
+  font-weight: 600;
+  animation: slideInLeft 0.3s forwards ease-in-out;
+  -webkit-animation: slideInLeft 0.3s forwards ease-in-out;
 }
 .app__section-card-container {
   display: flex;
@@ -275,26 +277,29 @@ h6 {
   .app__title {
     font-size: 2.6rem;
   }
-
   .app__card-timer {
     font-size: 6rem;
   }
 }
-@keyframes fadeIn {
+/* Animações */
+@keyframes slideInLeft {
   from {
     opacity: 0;
-    transform: translate3d(30px, 0, 0);
-    -webkit-transform: translate3d(30px, 0, 0);
-    -moz-transform: translate3d(30px, 0, 0);
-    -ms-transform: translate3d(30px, 0, 0);
-    -o-transform: translate3d(30px, 0, 0);
+    transform: translate3d(-30px, 0, 0);
   }
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    -ms-transform: translate3d(0, 0, 0);
-    -o-transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(30px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
