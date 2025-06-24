@@ -1,6 +1,10 @@
 const taskList = document.querySelector(".app__section-task-list");
 import creadeElements from "../partial/CreateELements.js";
-function creadeElementsTask() {
+function creadeElementsTask(description) {
+  if (!description || typeof description !== "string") {
+    console.warn("Descrição inválida:", description);
+    return;
+  }
   const li = new creadeElements("li", "", "app__section-task-list-item");
   const svg = new creadeElements("svg", "", "");
   const svgContainer = new creadeElements(
@@ -23,20 +27,26 @@ function creadeElementsTask() {
 
   const p = new creadeElements(
     "p",
-    "Estudando localStorage",
+    description,
     "app__section-task-list-item-description"
   );
   const btn = new creadeElements("button", "", "app_button-edit");
   const btnImg = new creadeElements("img", "", "");
   btnImg.setAttribute("src", "/imagens/edit.png");
 
-  taskList.appendChild(li.el);
-  li.el.appendChild(svg.el);
-  li.el.appendChild(p.el);
-  li.el.appendChild(btn.el);
-  svg.el.appendChild(svgContainer.el);
-  svgContainer.el.appendChild(circle.el);
-  svgContainer.el.appendChild(path.el);
-  btn.el.appendChild(btnImg.el);
+  if (description === undefined) {
+    taskList.style.display = "none";
+  } else {
+    taskList.appendChild(li.el);
+    li.el.appendChild(svg.el);
+    li.el.appendChild(p.el);
+    li.el.appendChild(btn.el);
+    svg.el.appendChild(svgContainer.el);
+    svgContainer.el.appendChild(circle.el);
+    svgContainer.el.appendChild(path.el);
+    btn.el.appendChild(btnImg.el);
+
+    return li;
+  }
 }
 export default creadeElementsTask;

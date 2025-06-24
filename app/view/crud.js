@@ -1,20 +1,39 @@
+import createTask from "../view/createTask.js";
 export default () => {
   const btnAddTaks = document.querySelector(".app__button--add-task");
   const formAddTask = document.querySelector(".app__form-add-task");
-  const texteraTaks = document.querySelector(".app__form-textarea");
+  const texteraTask = document.querySelector(".app__form-textarea");
 
-  const taks = [];
+  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  console.log(tasks);
 
   btnAddTaks.addEventListener("click", () => {
     formAddTask.classList.toggle("hidden");
   });
   formAddTask.addEventListener("submit", (event) => {
     event.preventDefault();
-    const taksDescription = {
-      description: texteraTaks.value,
+
+    const taskDescription = {
+      description: texteraTask.value || "Tarefa sem descrição",
       completed: false,
     };
-    taks.push(taksDescription);
-    localStorage.setItem("taks", JSON.stringify(taks));
+    tasks.push(taskDescription);
+    createTask(taskDescription.description);
+
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    texteraTask.value = "";
+    formAddTask.classList.add("hidden");
+  });
+
+  tasks.forEach((task) => {
+    if (
+      task &&
+      typeof task.description === "string" &&
+      task.description.trim() !== ""
+    ) {
+      createTask(task.description);
+    } else {
+      console.warn("Tarefa inválida:", task);
+    }
   });
 };
