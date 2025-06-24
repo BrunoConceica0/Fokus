@@ -3,7 +3,7 @@ const btnStartPause = document.getElementById("start-pause");
 const html = document.querySelector("html").getAttribute("data-contexto");
 
 // Tempo inicial do cronômetro (pode mudar facilmente depois)
-let timerSeconds = 1500;
+let timerSeconds = 25 * 60;
 let intervalId = null;
 
 // Sons
@@ -14,10 +14,13 @@ const soundFinish = new Audio("./sons/beep.mp3");
 // Função para atualizar o cronômetro (aqui você pode exibir no DOM se quiser)
 const countdown = (context) => {
   if (context === "longo") {
+    stopTimer();
     timerSeconds = 5 * 60;
   } else if (context === "curto") {
+    stopTimer();
     timerSeconds = 3 * 60;
   } else if (context === "foco") {
+    stopTimer();
     timerSeconds = 25 * 60;
   }
   showTimer(timerSeconds);
