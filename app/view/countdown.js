@@ -7,9 +7,9 @@ let timerSeconds = 25 * 60;
 let intervalId = null;
 
 // Sons
-const soundStart = new Audio("./sons/play.wav");
-const soundPause = new Audio("./sons/pause.mp3");
-const soundFinish = new Audio("./sons/beep.mp3");
+const soundStart = new Audio("../sons/play.wav");
+const soundPause = new Audio("../sons/pause.mp3");
+const soundFinish = new Audio("../sons/beep.mp3");
 
 // Função para atualizar o cronômetro (aqui você pode exibir no DOM se quiser)
 const countdown = (context) => {
