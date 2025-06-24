@@ -1,4 +1,4 @@
-import countdown from "./countdown.js";
+import countdown from "../countdown.js";
 const banner = document.querySelector(".app__image");
 const appTitle = document.querySelector(".app__title");
 const html = document.querySelector("html");
