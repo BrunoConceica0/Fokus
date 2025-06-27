@@ -7,16 +7,24 @@ const paragraphDescription = document.querySelector(
 );
 
 function creadeElementsTask(description) {
+  let descriptionSelecting = null;
   const li = new creadeElements("li", "", "app__section-task-list-item");
 
   li.on("click", () => {
-    paragraphDescription.textContent = description;
     taskList.querySelectorAll("li").forEach((li) => {
-      console.log(li);
       if (li.classList.contains("app__section-task-list-item-active")) {
         li.classList.remove("app__section-task-list-item-active");
       }
     });
+
+    if (descriptionSelecting == description) {
+      descriptionSelecting = null;
+      paragraphDescription.textContent = "";
+      return;
+    }
+
+    descriptionSelecting = description;
+    paragraphDescription.textContent = description;
     li.el.classList.add("app__section-task-list-item-active");
   });
   const svg = new creadeElements("svg", "", "");
