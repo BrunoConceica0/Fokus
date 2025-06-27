@@ -2,8 +2,23 @@ import sotrage from "../partial/localStorage.js";
 import creadeElements from "../partial/CreateELements.js";
 
 const taskList = document.querySelector(".app__section-task-list");
+const paragraphDescription = document.querySelector(
+  ".app__section-active-task-description"
+);
+
 function creadeElementsTask(description) {
   const li = new creadeElements("li", "", "app__section-task-list-item");
+
+  li.on("click", () => {
+    paragraphDescription.textContent = description;
+    taskList.querySelectorAll("li").forEach((li) => {
+      console.log(li);
+      if (li.classList.contains("app__section-task-list-item-active")) {
+        li.classList.remove("app__section-task-list-item-active");
+      }
+    });
+    li.el.classList.add("app__section-task-list-item-active");
+  });
   const svg = new creadeElements("svg", "", "");
   const svgContainer = new creadeElements(
     "svg",
@@ -28,7 +43,7 @@ function creadeElementsTask(description) {
     description,
     "app__section-task-list-item-description"
   );
-
+  p.el.style = "cursor: pointer";
   const btn = new creadeElements("button", "", "app_button-edit");
   btn.setAttribute("type", "button");
   btn.setAttribute("title", "Editar tarefa");
