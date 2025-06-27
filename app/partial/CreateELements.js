@@ -5,7 +5,7 @@ class Element {
     this.el.className = classe;
   }
 
-  Add(selector) {
+  add(selector) {
     const destination = document.querySelector(selector);
     if (destination) destination.appendChild(this.el);
   }

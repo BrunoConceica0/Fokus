@@ -1,11 +1,11 @@
 import createTask from "../view/createTask.js";
+import sotrage from "../partial/localStorage.js";
 export default () => {
   const btnAddTaks = document.querySelector(".app__button--add-task");
   const formAddTask = document.querySelector(".app__form-add-task");
   const texteraTask = document.querySelector(".app__form-textarea");
 
-  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  console.log(tasks);
+  const tasks = sotrage.getLocalStorage("tasks");
 
   btnAddTaks.addEventListener("click", () => {
     formAddTask.classList.toggle("hidden");
@@ -14,13 +14,12 @@ export default () => {
     event.preventDefault();
 
     const taskDescription = {
-      description: texteraTask.value || "Tarefa sem descrição",
-      completed: false,
+      description: texteraTask.value.trim(),
     };
     tasks.push(taskDescription);
     createTask(taskDescription.description);
 
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    sotrage.setLocalStorage("tasks", tasks);
     texteraTask.value = "";
     formAddTask.classList.add("hidden");
   });
@@ -31,9 +30,8 @@ export default () => {
       typeof task.description === "string" &&
       task.description.trim() !== ""
     ) {
+      console.log("Restaurando tarefa:", task.description);
       createTask(task.description);
-    } else {
-      console.warn("Tarefa inválida:", task);
     }
   });
 };

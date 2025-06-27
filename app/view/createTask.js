@@ -1,10 +1,14 @@
-const taskList = document.querySelector(".app__section-task-list");
+import sotrage from "../partial/localStorage.js";
 import creadeElements from "../partial/CreateELements.js";
+const taskList = document.querySelector(".app__section-task-list");
 function creadeElementsTask(description) {
-  if (!description || typeof description !== "string") {
-    console.warn("Descrição inválida:", description);
-    return;
-  }
+  // if (!description || typeof description !== "string") {
+  //   console.warn("Descrição inválida, elemento não criado:", description);
+  //   return;
+  // }
+
+  // console.log("✅ createElementsTask:", description);
+
   const li = new creadeElements("li", "", "app__section-task-list-item");
   const svg = new creadeElements("svg", "", "");
   const svgContainer = new creadeElements(
@@ -30,12 +34,36 @@ function creadeElementsTask(description) {
     description,
     "app__section-task-list-item-description"
   );
+
   const btn = new creadeElements("button", "", "app_button-edit");
+  btn.setAttribute("type", "button");
+  btn.setAttribute("title", "Editar tarefa");
+  btn.on("click", (event) => {
+    event.preventDefault();
+    const newDescription = prompt("Editar tarefa");
+    if (newDescription === null || newDescription.trim() === "") {
+      alert("Descrição inválida, a tarefa não foi editada.");
+      return;
+    } else {
+      p.el.textContent = newDescription;
+
+      const tasks = sotrage.getLocalStorage("tasks");
+      const taskIndex = tasks.findIndex(
+        (task) => task.description === description
+      );
+      if (taskIndex !== -1) {
+        tasks[taskIndex].description = newDescription;
+        sotrage.setLocalStorage("tasks", tasks);
+        alert("Tarefa editada com sucesso!");
+      }
+    }
+  });
+
   const btnImg = new creadeElements("img", "", "");
   btnImg.setAttribute("src", "/imagens/edit.png");
 
-  if (description === undefined) {
-    taskList.style.display = "none";
+  if (!description || typeof description !== "string") {
+    p.textContent = "Descrição inválida";
   } else {
     taskList.appendChild(li.el);
     li.el.appendChild(svg.el);
