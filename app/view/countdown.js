@@ -1,6 +1,5 @@
 import showTimer from "../partial/timer.js";
 const btnStartPause = document.getElementById("start-pause");
-const html = document.querySelector("html").getAttribute("data-contexto");
 
 // Tempo inicial do cronômetro (pode mudar facilmente depois)
 let timerSeconds = 25 * 60;

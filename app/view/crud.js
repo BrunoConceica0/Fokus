@@ -1,5 +1,7 @@
 import createTask from "../view/createTask.js";
 import sotrage from "../partial/localStorage.js";
+import formClean from "../components/form/formClean.js";
+import formDelete from "../components/form/formDelete.js";
 export default () => {
   const btnAddTaks = document.querySelector(".app__button--add-task");
   const formAddTask = document.querySelector(".app__form-add-task");
@@ -34,4 +36,6 @@ export default () => {
       createTask(task.description);
     }
   });
+  formClean(texteraTask);
+  formDelete(formAddTask);
 };

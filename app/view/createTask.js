@@ -1,14 +1,8 @@
 import sotrage from "../partial/localStorage.js";
 import creadeElements from "../partial/CreateELements.js";
+
 const taskList = document.querySelector(".app__section-task-list");
 function creadeElementsTask(description) {
-  // if (!description || typeof description !== "string") {
-  //   console.warn("Descrição inválida, elemento não criado:", description);
-  //   return;
-  // }
-
-  // console.log("✅ createElementsTask:", description);
-
   const li = new creadeElements("li", "", "app__section-task-list-item");
   const svg = new creadeElements("svg", "", "");
   const svgContainer = new creadeElements(
@@ -40,23 +34,37 @@ function creadeElementsTask(description) {
   btn.setAttribute("title", "Editar tarefa");
   btn.on("click", (event) => {
     event.preventDefault();
+
+    // Abre o prompt com a descrição atual já preenchida para o usuário editar
     const newDescription = prompt("Editar tarefa");
+
+    // Se o usuário cancelar ou deixar em branco, avisa e não continua
     if (newDescription === null || newDescription.trim() === "") {
       alert("Descrição inválida, a tarefa não foi editada.");
       return;
     } else {
       p.el.textContent = newDescription;
 
+      // Busca a lista de tarefas atual no localStorage
       const tasks = sotrage.getLocalStorage("tasks");
+
+      // Encontra o índice da tarefa atual usando a descrição antiga como referência
       const taskIndex = tasks.findIndex(
         (task) => task.description === description
       );
+
+      // Se encontrar a tarefa (index diferente de -1)
       if (taskIndex !== -1) {
         tasks[taskIndex].description = newDescription;
+
+        // Salva o array atualizado de volta no localStorage
         sotrage.setLocalStorage("tasks", tasks);
         alert("Tarefa editada com sucesso!");
       }
     }
+
+    // Atualiza a variável description com a nova descrição
+    description = newDescription;
   });
 
   const btnImg = new creadeElements("img", "", "");
