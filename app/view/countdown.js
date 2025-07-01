@@ -20,7 +20,9 @@ const countdown = (context) => {
     timerSeconds = 3 * 60;
   } else if (context === "foco") {
     stopTimer();
-    timerSeconds = 25 * 60;
+    timerSeconds = 0.1 * 60;
+    const event = new CustomEvent("completionFocos");
+    document.dispatchEvent(event);
   }
   showTimer(timerSeconds);
   if (timerSeconds <= 0) {
