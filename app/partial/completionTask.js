@@ -1,24 +1,33 @@
-let descriptionSelecionada = null;
+import sotrage from "../partial/localStorage.js";
+
+let tarefaSelecionada = null;
 let liSelecionada = null;
 
 function completionTask(description, li) {
-  descriptionSelecionada = description;
+  tarefaSelecionada = description;
   liSelecionada = li;
-  console.log("Tarefa completada:", descriptionSelecionada);
-  console.log("Elemento LI selecionado:", liSelecionada);
 }
 
 document.addEventListener("completionFocos", () => {
-  if (descriptionSelecionada && liSelecionada) {
+  if (tarefaSelecionada && liSelecionada) {
     liSelecionada.classList.remove("app__section-task-list-item-active");
     liSelecionada.classList.add(
       "app__section-task-list-item-complete",
       "app__section-task-icon-status"
     );
 
-    // Desativa o botão de editar
     const btn = liSelecionada.querySelector("button");
     if (btn) btn.setAttribute("disabled", true);
+
+    const tasks = sotrage.getLocalStorage("tasks");
+    const index = tasks.findIndex((t) => t.description === tarefaSelecionada);
+    if (index !== -1) {
+      tasks[index].complete = true;
+      sotrage.setLocalStorage("tasks", tasks);
+    }
+
+    tarefaSelecionada = null;
+    liSelecionada = null;
   }
 });
 

@@ -1,4 +1,4 @@
-import sotrage from "../partial/localStorage.js";
+import storage from "../partial/localStorage.js";
 import createElements from "../partial/CreateELements.js";
 import completionTask from "../partial/completionTask.js";
 
@@ -10,7 +10,14 @@ const paragraphDescription = document.querySelector(
 function createElementsTask(description) {
   let descriptionSelecting = null;
   let liDescriptionSelecting = null;
+
   const li = new createElements("li", "", "app__section-task-list-item");
+
+  const tasks = storage.getLocalStorage("tasks");
+  const task = tasks.find((task) => task.description === description);
+
+  // checando se a tarefa está completa para o localStorage salvar como true e aplicando a estilização de completo no li na linha 123
+  const isCompleted = task && task.complete === true;
 
   li.on("click", () => {
     taskList.querySelectorAll("li").forEach((li) => {
@@ -19,7 +26,7 @@ function createElementsTask(description) {
       }
     });
 
-    if (descriptionSelecting == description) {
+    if (descriptionSelecting === description) {
       descriptionSelecting = null;
       paragraphDescription.textContent = "";
       liDescriptionSelecting = null;
@@ -28,10 +35,17 @@ function createElementsTask(description) {
 
     descriptionSelecting = description;
     liDescriptionSelecting = li.el;
+
+    // Notify the completion module which task is selected
     completionTask(description, li.el);
+
     paragraphDescription.textContent = description;
     li.el.classList.add("app__section-task-list-item-active");
+
+    // (Optional) Save the task element state if needed
+    storage.setLocalStorage(description, li.el);
   });
+
   const svg = new createElements("svg", "", "");
   const svgContainer = new createElements(
     "svg",
@@ -57,41 +71,36 @@ function createElementsTask(description) {
     "app__section-task-list-item-description"
   );
   p.el.style = "cursor: pointer";
+
   const btn = new createElements("button", "", "app_button-edit");
   btn.setAttribute("type", "button");
-  btn.setAttribute("title", "Editar tarefa");
+  btn.setAttribute("title", "Edit task");
+
   btn.on("click", (event) => {
     event.preventDefault();
 
-    // Abre o prompt com a descrição atual já preenchida para o usuário editar
-    const newDescription = prompt("Editar tarefa");
+    // Ask the user to edit the current task
+    const newDescription = prompt("Edit task");
 
-    // Se o usuário cancelar ou deixar em branco, avisa e não continua
     if (newDescription === null || newDescription.trim() === "") {
-      alert("Descrição inválida, a tarefa não foi editada.");
+      alert("Invalid description. Task was not edited.");
       return;
     } else {
       p.el.textContent = newDescription;
 
-      // Busca a lista de tarefas atual no localStorage
-      const tasks = sotrage.getLocalStorage("tasks");
+      const tasks = storage.getLocalStorage("tasks");
 
-      // Encontra o índice da tarefa atual usando a descrição antiga como referência
       const taskIndex = tasks.findIndex(
         (task) => task.description === description
       );
 
-      // Se encontrar a tarefa (index diferente de -1)
       if (taskIndex !== -1) {
         tasks[taskIndex].description = newDescription;
-
-        // Salva o array atualizado de volta no localStorage
-        sotrage.setLocalStorage("tasks", tasks);
-        alert("Tarefa editada com sucesso!");
+        storage.setLocalStorage("tasks", tasks);
+        alert("Task successfully edited!");
       }
     }
 
-    // Atualiza a variável description com a nova descrição
     description = newDescription;
   });
 
@@ -110,8 +119,19 @@ function createElementsTask(description) {
     svgContainer.el.appendChild(path.el);
     btn.el.appendChild(btnImg.el);
 
+    //Na linha 20 apos checar se a tarefa está completa, adiciona a classe de estilização e desabilita o botão de editar
+    if (isCompleted) {
+      li.el.classList.add(
+        "app__section-task-list-item-complete",
+        "app__section-task-icon-status"
+      );
+      btn.el.setAttribute("disabled", true);
+    }
+
     return li;
   }
+
   completionTask(description, li.el);
 }
+
 export default createElementsTask;
