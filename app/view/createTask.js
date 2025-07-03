@@ -1,14 +1,16 @@
 import sotrage from "../partial/localStorage.js";
-import creadeElements from "../partial/CreateELements.js";
+import createElements from "../partial/CreateELements.js";
+import completionTask from "../partial/completionTask.js";
 
 const taskList = document.querySelector(".app__section-task-list");
 const paragraphDescription = document.querySelector(
   ".app__section-active-task-description"
 );
 
-function creadeElementsTask(description) {
+function createElementsTask(description) {
   let descriptionSelecting = null;
-  const li = new creadeElements("li", "", "app__section-task-list-item");
+  let liDescriptionSelecting = null;
+  const li = new createElements("li", "", "app__section-task-list-item");
 
   li.on("click", () => {
     taskList.querySelectorAll("li").forEach((li) => {
@@ -20,39 +22,42 @@ function creadeElementsTask(description) {
     if (descriptionSelecting == description) {
       descriptionSelecting = null;
       paragraphDescription.textContent = "";
+      liDescriptionSelecting = null;
       return;
     }
 
     descriptionSelecting = description;
+    liDescriptionSelecting = li.el;
+    completionTask(description, li.el);
     paragraphDescription.textContent = description;
     li.el.classList.add("app__section-task-list-item-active");
   });
-  const svg = new creadeElements("svg", "", "");
-  const svgContainer = new creadeElements(
+  const svg = new createElements("svg", "", "");
+  const svgContainer = new createElements(
     "svg",
     "",
     "app__section-task-icon-status"
   );
-  const circle = new creadeElements("circle", "", "");
+  const circle = new createElements("circle", "", "");
   circle.setAttribute("cx", "12");
   circle.setAttribute("cy", "12");
   circle.setAttribute("r", "12");
   circle.setAttribute("fill", "#E2E8F0");
 
-  const path = new creadeElements("path", "", "");
+  const path = new createElements("path", "", "");
   path.setAttribute(
     "d",
     "M9 16.1719L19.5938 5.57812L21 6.98438L9 18.9844L3.42188 13.4062L4.82812 12L9 16.1719Z"
   );
   path.setAttribute("fill", "#01080E");
 
-  const p = new creadeElements(
+  const p = new createElements(
     "p",
     description,
     "app__section-task-list-item-description"
   );
   p.el.style = "cursor: pointer";
-  const btn = new creadeElements("button", "", "app_button-edit");
+  const btn = new createElements("button", "", "app_button-edit");
   btn.setAttribute("type", "button");
   btn.setAttribute("title", "Editar tarefa");
   btn.on("click", (event) => {
@@ -90,7 +95,7 @@ function creadeElementsTask(description) {
     description = newDescription;
   });
 
-  const btnImg = new creadeElements("img", "", "");
+  const btnImg = new createElements("img", "", "");
   btnImg.setAttribute("src", "/imagens/edit.png");
 
   if (!description || typeof description !== "string") {
@@ -107,5 +112,6 @@ function creadeElementsTask(description) {
 
     return li;
   }
+  completionTask(description, li.el);
 }
-export default creadeElementsTask;
+export default createElementsTask;

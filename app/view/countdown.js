@@ -11,28 +11,38 @@ const soundPause = new Audio("../sons/pause.mp3");
 const soundFinish = new Audio("../sons/beep.mp3");
 
 // Função para atualizar o cronômetro (aqui você pode exibir no DOM se quiser)
+
 const countdown = (context) => {
+  stopTimer();
+
   if (context === "longo") {
-    stopTimer();
     timerSeconds = 5 * 60;
   } else if (context === "curto") {
-    stopTimer();
     timerSeconds = 3 * 60;
   } else if (context === "foco") {
-    stopTimer();
-    timerSeconds = 0.1 * 60;
-    const event = new CustomEvent("completionFocos");
-    document.dispatchEvent(event);
+    timerSeconds = 0.1 * 60; // 6 segundos para teste
   }
+
   showTimer(timerSeconds);
-  if (timerSeconds <= 0) {
-    btnStartPause.disabled = true;
-    stopTimer();
-    soundFinish.play();
-    // console.log("⏰ Tempo esgotado!");
-    return;
-  }
-  timerSeconds--;
+
+  intervalId = setInterval(() => {
+    timerSeconds--;
+    showTimer(timerSeconds);
+
+    if (timerSeconds <= 0) {
+      stopTimer();
+      soundFinish.play();
+      console.log(context);
+      alert("Tempo esgotado!");
+
+      if (context === "foco") {
+        console.log(context);
+        const event = new CustomEvent("completionFocos");
+        document.dispatchEvent(event);
+        // Não chame completionTask aqui se quiser que o usuário clique para isso
+      }
+    }
+  }, 1000);
 };
 
 // Inicia ou retoma o temporizador
