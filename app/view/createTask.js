@@ -1,6 +1,7 @@
 import storage from "../partial/localStorage.js";
 import createElements from "../partial/CreateELements.js";
 import completionTask from "../partial/completionTask.js";
+import removeTaksCompleted from "../components/form/removeTaks.js";
 
 const taskList = document.querySelector(".app__section-task-list");
 const paragraphDescription = document.querySelector(
@@ -132,6 +133,7 @@ function createElementsTask(description) {
   }
 
   completionTask(description, li.el);
+  removeTaksCompleted();
 }
 
 export default createElementsTask;
