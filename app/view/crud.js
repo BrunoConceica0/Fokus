@@ -13,6 +13,7 @@ export default () => {
     formAddTask.classList.toggle("hidden");
   });
   formAddTask.addEventListener("submit", (event) => {
+    console.log(event.currentTarget);
     event.preventDefault();
 
     const taskDescription = {
