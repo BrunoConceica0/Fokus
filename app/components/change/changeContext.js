@@ -4,7 +4,6 @@ const appTitle = document.querySelector(".app__title");
 const html = document.querySelector("html");
 
 function changeContext(context) {
-  countdown(context);
   html.setAttribute("data-contexto", context);
   // adiciona o atributo data-contexto ao html para mudar a cor do background
   banner.setAttribute("src", `./imagens/${context}.png`);
@@ -34,5 +33,6 @@ function changeContext(context) {
                 <strong class="app__title-strong">mergulhe no que importa.</strong>
     `;
   }
+  countdown(context);
 }
 export default changeContext;
