@@ -133,7 +133,7 @@ function createElementsTask(description) {
   }
 
   completionTask(description, li.el);
-  removeTaksCompleted();
+  removeTaksCompleted(isCompleted);
 }
 
 export default createElementsTask;
